@@ -23,7 +23,7 @@
 ## 시간복잡도
 ![big O complexity chart](img/2022-07-22-22-58-58.png)
 
-O(N!) > O(2$^N$) > O(N$^2$) > O(N$log{N}$) > O(N) > O($\sqrt{n}$) > O($log{N}$) > O(1)
+O(N!) > O(2^N) > O(N^2) > O(NlogN) > O(N) > O(sqrt(n)) > O(logN) > O(1)
 
 ### O(1) constant time
 * 입력크기에 상관없이 언제나 일정한 시간이 걸리는 알고리즘
@@ -49,7 +49,7 @@ def point_1d(N):
     return point
 ```
 
-### O(N$^{2}$) quadratic time
+### O(N^2) quadratic time
 * n x n
 ```python
 def point_2d(N):
@@ -71,7 +71,7 @@ def point_2d(N, M):
     return point
 ```
 
-### O(N$^3$) cubic time / polynomial time
+### O(N^3) cubic time / polynomial time
 * n x n x n
 ```python
 def point_3d(N):
@@ -83,7 +83,7 @@ def point_3d(N):
     return point
 ```
 
-### O(2$^N$) exponential time
+### O(2^N) exponential time
 * fibonacci
 * 호출할 때마다 두배씩 증가
 ```python
@@ -93,10 +93,10 @@ def fibonacci(N):
     else:
         return fibonacci(N - 1) + fibonacci(N - 2)
 ```
-### O(M$^N$) exponential time
+### O(M^N) exponential time
 * 호출할 때마다 M배씩 증가
 
-### O($log{N}$)
+### O(logN)
 * binary search 이분탐색
 * 루프마다 1/2씩 감소
 ```python
@@ -106,7 +106,7 @@ def binary_search(str, end, key, lst):
     elif lst[mid] > key: return binary_search(str, mid - 1, key, lst)
     else: return binary_search(mid + 1, end, key, lst)
 ```
-### O($\sqrt{N}$)
+### O(sqrt(N))
 * 루프N에 대해 sqrt(N)까지 진행
 
 ---
@@ -123,16 +123,30 @@ ret = sorted(lst, key= lambda x : len(x), reverse= False)
 [sort algorithm](https://gyoogle.dev/blog/algorithm/Bubble%20Sort.html)
 
 * 연습
+
 ![연습](img/2022-07-30-13-20-57.png)
 
-### bubble sort 버블 정렬
+### bubble sort 거품 정렬
+* 인접한 두 원소를 비교하여 정렬
 1. 1회차 : 첫 번째, 두 번째 비교 / 두 번째, 세 번째 비교 / ... / n-1 번째, n 번째 비교
 2. 1회차 결과 가장 큰 값이 맨뒤로
 3. 2회차 : 1.반복 / ... / n-2 번째, n-1 번째 까지
 4. 반복
 ```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+# bubble sort
+for i in range(len(lst) - 1, 0, -1):
+    for j in range(i):
+        if lst[j] > lst[j + 1]:
+            lst[j], lst[j + 1] = lst[j + 1], lst[j]
+
+print(lst)
 ```
-* O(N$^2$)
+* O(N^2)
 * stable
 
 ### selection sort 선택 정렬
@@ -141,13 +155,45 @@ ret = sorted(lst, key= lambda x : len(x), reverse= False)
 3. 맨 앞/뒤를 제외한 배열에서 1.반복
 4. 반복
 ```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+# selection sort
+for i in range(len(lst)):
+    min_index = i
+    for j in range(i + 1, len(lst)):
+        if lst[min_index] > lst[j]:
+            min_index = j
+    lst[i], lst[min_index] = lst[min_index], lst[i]
+
+print(lst)
 ```
-* O(N$^2$)
+* O(N^2)
 * unstable
 
 ### insertion sort 삽입 정렬
-1. 2번째 원소부터 그 앞까지의 원소와 크기 비교, 들어갈 위치에 삽입
+1. 두 번째 원소부터 이전의 원소와 크기비교, 들어갈 위치를 탐색
+2. 왼쪽보다 작으면 서로 스왑, 왼쪽보다 크면 정지하고 다음 탐색
+3. 세 번째 원소부터 이전의 원소와 크기 비교, 들어갈 위치를 탐색
+4. 왼쪽보다 작으면 서로 스왑, 왼쪽보다 크면 정지하고 다음 탐색
+5. 반복..
 ```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+# insertion sort
+for i in range(1, len(lst)):
+    for j in range(i, 0, -1):
+        if lst[j] < lst[j - 1]: 
+            lst[j], lst[j - 1] = lst[j - 1], lst[j]
+        else:
+            break   
+
+print(lst)
 ```
 
 ### merge sort 병합 정렬
@@ -157,19 +203,114 @@ ret = sorted(lst, key= lambda x : len(x), reverse= False)
 4. 다음 단위의 인접한 두 배열 끼리 3.반복 
 5. 배열 비교방법 중 하나 투포인터
 ```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+# merg sort
+def merge_sort(lst):
+    if len(lst) < 2:
+        return lst
+
+    mid = len(lst) // 2
+    left_lst = merge_sort(lst[:mid])
+    right_lst = merge_sort(lst[mid:])
+
+    merged_lst = []
+    l = h = 0
+    while l < len(left_lst) and h < len(right_lst):
+        if left_lst[l] < right_lst[h]:
+            merged_lst.append(left_lst[l])
+            l += 1
+        else:
+            merged_lst.append(right_lst[h])
+            h += 1
+    
+    merged_lst += left_lst[l:]
+    merged_lst += right_lst[h:]
+    return merged_lst
+
+print(merge_sort(lst))
 ```
 
-* 평균 : O(N$log{N}$)
+* 평균 : O(NlogN)
 * stable
 
 ### quick sort 퀵 정렬
-1. 배열에서 하나의 원소를 선택 (피봇)
-2. 해당 원소를 기준으로 기준보다 작은 수는 앞으로, 큰 수는 뒤로 정렬
-3. 기준원소 앞 배열, 뒤 배열에서 각각 1. 반복
+* 배열에서 하나의 원소를 선택 (피봇)
+* 해당 원소를 기준으로 기준보다 작은 수는 앞으로, 큰 수는 뒤로 정렬
+* 기준원소 앞 배열, 뒤 배열에서 각각 1. 반복
+
+1. 기준이 될 원소를 선택 (pivot 선택)
+2. 왼쪽부터 탐색하여 pivot보다 큰 값을 선택
+3. 오른쪽부터 탐색하여 pviot보다 작은 값을 선택
+4. 두 값을 교환
+5. 2.부터 반복... (sort)
+6. 왼쪽탐색과 오른쪽탐색이 겹치게 되면, 작은 값을 pivot과 교환
+7. pivot을 기준으로 왼쪽 배열, 오른쪽 배열로 나뉨 (partiton)
+8. 각각 왼쪽/오른쪽 배열에서 1부터 반복(재귀)...
 ```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+# quick sort
+def quick_sort(lst):
+    def sorted_lst(left, right):
+        if left >= right: return      # base case
+
+        mid = partition(left, right)  # pivot을 기준으로 앞 뒤 배열에서 정렬 : 재귀
+        sorted_lst(left, mid - 1)          
+        sorted_lst(mid, right)
+
+    def partition(left, right):
+        # 최악의 경우를 피하기위해, pviot을 정하는 여러 방법이 있다
+        # pivot = low                   # pivot으로 첫 번째 원소를 설정
+        # pivot = random.choice(lst)    # pivot으로 랜덤값을 설정
+        pivot = lst[(left + right) // 2]       # pivot으로 중앙값을 설정
+        while left <= right:
+            while lst[left] < pivot:
+                left += 1
+
+            while lst[right] > pivot:
+                right -= 1
+            
+            if left <= right:
+                lst[left], lst[right] = lst[right], lst[left]
+                left, right = left + 1, right - 1
+        
+        return left
+    return sorted_lst(0, len(lst) - 1)
+
+quick_sort(lst)
+print(lst)
 ```
-* 평균 : O(N$log{N}$)
-* 최악 : O(N$^2$)
+
+#### pythonic한 방법
+```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+# quick sort
+def quick_sort(lst):
+    if len(lst) <= 1:
+        return lst
+    pivot = lst[0]
+    others = lst[1:]
+
+    left_lst = [x for x in others if x <= pivot]
+    right_lst = [x for x in others if x > pivot]
+
+    return quick_sort(left_lst) + [pivot] + quick_sort(right_lst)
+
+print(quick_sort(lst))
+```
+* 평균 : O(NlogN)
+* 최악 : O(N^2)
 * unstable
 * 최악을 피하기 위해서 피봇을 랜덤 혹은 중앙값
 
@@ -259,6 +400,7 @@ def gcd(a, b):
 * 소수 판별
 ```python
 def isPrime(N):
+    if N == 1: return False
     for i in range(2, N):
         if N % i == 0: return False
     return True
@@ -295,17 +437,6 @@ print(eratos(50))
 * 점화식
   * F(N) = 2 x F(N - 1) + 1 , F(1) = 1
 ```python
-def era(N):
-    check, prime = [False for _ in range(N + 1)], []
-    for i in range(2, N + 1):
-        if check[i] == True: continue
-        prime.append(i)
-        for j in range(i * i, N + 1, i):
-            check[j] = True
-    return check, prime
-
-print(era(50))
-
 def hanoi(st, ed, sz):
     if sz == 1: return print(st, ed)
     hanoi(st, 6-st-ed, sz-1)
