@@ -10,4 +10,6 @@ week 0. 입출력 문제
 
 week 1. [수학 정렬](doc/week1_sort.md)
 
-week 2. 자료구조
+week 2. [자료구조](doc/week2_datastructure.md)
+
+week 3. 동적 계획법
