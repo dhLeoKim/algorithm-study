@@ -163,7 +163,7 @@
   # 0
   # defaultdict(<class 'int'>, {0: 10, 10: 0})
   ```
-* 예시
+* 예제
 * ![hash 예시](./img/2022-08-06-15-40-44.png)
 * ![hash table](./img/2022-08-06-15-39-14.png)
 
@@ -178,3 +178,51 @@
   * quadratic probing
   * double hashing
 
+## tree
+* ![tree](./img/2022-08-09-23-05-15.png)
+* 상위/하위 관계를 나타내는 데이터 구조
+* node 와 edge로 구성
+
+### terminology 용어
+* root : 최상위
+* leaf node : 최하위
+* parent : 부모
+* child : 자식
+* sibling : 형제
+* ancester : root까지의 경로에 있는 node들
+* descendant : subtree의 모든 node들
+* subtree 
+* degree
+* level : root가 level 0
+* height : max level
+
+### 저장 방법
+```python
+tree = [0, 1, 1, 2, 2, 5, 5, 5]
+```
+* 부모를 저장
+  * 1차원 배열 (1개만 저장)
+  * 8의 조상은??
+    * 5 -> 2 -> 1
+
+```python
+tree = [[2, 3], [4, 5], [], [], [6, 7, 8], [], [], []]
+```
+* 자식 저장
+  * root부터 탐색에 유용
+  * 재귀(순환)를 사용할 때 유용
+
+* 예제
+* [촌수계산 2644](https://www.acmicpc.net/problem/2644)
+
+
+## binary tree 이진트리
+* ![binary tree](./img/2022-08-09-23-38-06.png)
+* 자식 노드의 최대 개수가 2
+* 부모 x에 대해, 왼쪽 자식은 2x, 오른쪽 자식은 2x+1
+* 2x , 2x+1 , //2 의 성질을 이용
+* 예제
+* [30번 13116](https://www.acmicpc.net/problem/13116)
+
+## heap
+## bst
