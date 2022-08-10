@@ -183,7 +183,7 @@
 * 상위/하위 관계를 나타내는 데이터 구조
 * node 와 edge로 구성
 
-### terminology 용어
+### terminology
 * root : 최상위
 * leaf node : 최하위
 * parent : 부모
@@ -225,4 +225,66 @@ tree = [[2, 3], [4, 5], [], [], [6, 7, 8], [], [], []]
 * [30번 13116](https://www.acmicpc.net/problem/13116)
 
 ## heap
-## bst
+```python
+lst = [3, 9, 2, 1, 4, 5]
+```
+* ![heap example](./img/2022-08-10-01-08-54.png)
+* ![max, min](./img/2022-08-10-01-15-22.png)
+* heap 특성을 가지는 완전 이진 트리 자료구조
+* a complete binary tree that satisfies the heap property
+* max heap : 부모가 자식보다 항상 크다
+* min heap : 부모가 자식보다 항상 작다
+* leaf node 바로 이전의 index부터 index 0까지
+  * index n//2 부터 heapify
+  * ex) 2부터 시작 0까지
+  * [heap visualization](https://www.cs.usfca.edu/~galles/visualization/Heap.html)
+* 파이썬에서 사용할 때는 **import heapq**
+* 파이썬의 heap은 min-heap (오름차순)
+* [python heapq](https://docs.python.org/3/library/heapq.html)
+  * heappush
+  * heappop
+  * heappushpop
+  * heapify
+ 
+### heap sort
+* 반정렬, 느슨한 정렬
+* max/min 값 몇개를 가져와야 할 때 유용
+* O(NlogN)
+```python
+# heap sort
+import heapq
+
+def heapsort(iterable):
+    h = []
+    for value in iterable:
+        heappush(h, value)
+    return [heappop(h) for i in range(len(h))]
+
+heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+```
+```python
+h = []
+heappush(h, (5, 'write code'))
+heappush(h, (7, 'release product'))
+heappush(h, (1, 'write spec'))
+heappush(h, (3, 'create tests'))
+heappop(h)  # (1, 'write spec')
+```
+
+## priority queue 우선순위 큐
+* 우선순위가 가장 높은 데이터부터 삭제하는 자료구조
+* 우선순위에 따라 처리하고 싶을 때 사용
+
+## bianry search tree (bst) 이진 검색 트리
+* ![bst](./img/2022-08-10-01-04-58.png)
+* root, node보다 작으면 왼쪽
+* root, node보다 크면 오른쪽
+* sub tree도 항상 bst 이다
+* 최악의 경우를 피하기 위해 다양한 트리가 존재
+  * AVL tree
+  * splay tree
+  * redblack tree
+* O(logN)
+
+## 참고
+* [progrmiz](https://www.programiz.com/dsa/heap-data-structure)
