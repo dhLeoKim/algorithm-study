@@ -238,7 +238,7 @@ lst = [3, 9, 2, 1, 4, 5]
   * index n//2 부터 heapify
   * ex) 2부터 시작 0까지
   * [heap visualization](https://www.cs.usfca.edu/~galles/visualization/Heap.html)
-* 파이썬에서 사용할 때는 **import heapq**
+* 파이썬에서 사용할 때는 **from heapq import***
 * 파이썬의 heap은 min-heap (오름차순)
 * [python heapq](https://docs.python.org/3/library/heapq.html)
   * heappush
@@ -252,7 +252,7 @@ lst = [3, 9, 2, 1, 4, 5]
 * O(NlogN)
 ```python
 # heap sort
-import heapq
+from heapq import*
 
 def heapsort(iterable):
     h = []

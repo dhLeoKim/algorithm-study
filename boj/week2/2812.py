@@ -13,15 +13,6 @@
 # print(f'{"".join(num)}')
 
 
-
-# stack[-1] 새로 들어올 수 n 비교
-# while k > 0:
-# n이 크면 while len(stack) > 0 : pop, cnt -- continue, append
-# n이 같거나 작으면 append, continue
-# 나머지 추가
-
-
-
 ##################
 N, K = map(int, input().split())
 lst = list(i for i in input())
