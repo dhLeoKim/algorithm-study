@@ -314,9 +314,80 @@ print(quick_sort(lst))
 * unstable
 * 최악을 피하기 위해서 피봇을 랜덤 혹은 중앙값
 
-### 등등
+### 기타 다른 정렬
+### counting sort
+* 주어진 배열에 원소의 중복 개수를 세어 count 배열을 만들고
+* 중복된 원소의 개수 값을 이용하여 정렬
+1. 원소의 값에 해당하는 idx에 count[idx]++ 하여 중복된 개수 저장
+2. coutn 배열을 idx = 0부터 누적합으로 수정
+3. 주어진 배열을 끝에서부터 탐색, 해당 값을 idx로 하는 count[idx]-- 하고
+4. count[idx]-- 값을 idx로 하는 반환 배열에 탐색된 값을 저장
+```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+def countSort(lst):
+    c = [0 for _ in range(len(lst))]
+    ret = [0 for _ in range(len(lst))]
+    
+    for i in range(len(lst)): c[i] += 1
+
+    for i in range(1, len(c)): c[i] += c[i-1]
+
+    for i in range(len(ret)-1, -1, -1):
+        c[lst[i]] -= 1
+        ret[c[lst[i]]] = lst[i]
+
+    return ret
+
+print(countSort(lst))
+```
+* O(N + K)
+  * N : 리스트 길이
+  * K : 정수의 최대값
+* N이 작을 때 유용
+
+
+### heap sort
+* [heap sort](./week2_datastructure.md)
+* heap 구조를 이용한 정렬
+* heapq는 min heap이 default (오름차순)
+1. heappush하여 원소 추가
+2. 최소값이 제일 위로 가도록 heap 구조 정렬
+3. 젤 위의 값(최소값)을 heappop 하여 반환 배열에 추가
+```python
+import random
+lst = list(range(10))
+random.shuffle(lst)
+print(lst)
+
+from heapq import*
+
+def heapsort(lst):
+    h = []
+    ret = []
+    for value in lst:
+        heappush(h, value)
+    
+    ret = [heappop(h) for i in range(len(h))]
+    
+    return  ret
+
+print(heapsort(lst))
+```
+
 ### 정렬 알고리즘 비교
-* runtime , time coplelxity
+|알고리즘|평균|최악|방법|특징|
+|:--|:--|:--|:--|:--|
+|bubble sort|O(N^2)|O(N^2)|비교, 교환|구현이 쉽지만 느림|
+|selection sort|O(N^2|O(N^2)|비교, 교환|교환의 회수가 적다|
+|insertion sort|O(N^2)|O(N^2)|비교, 교환|n이 작을 때 유용|
+|merge sort|O(NlogN)|O(NlogN)|분할, 정복|linked list 경우 가장 효율적|
+|quirck sort|O(NlogN)|O(N^2)|분할, 정복|가장 빠른 정렬|
+|counting sort|O(N+K)|O(N+K)|비교환|n이 작을 때 유용|
+
 * stable, unstable
 * 장단점
 * 용도
