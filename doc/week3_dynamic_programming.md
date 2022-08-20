@@ -11,16 +11,36 @@
 1. 최적 부분 구조 : 큰 문제를 작은 문제로 나눔
 2. 부분 문제 중복 : 동일한 작은 문제가 반복적으로 나타남
 
-   vs 분할 정복
+## vs 분할 정복
+* 문제를 작은 문제들로 분할하는 것은 같음
+* 하지만 dp는 부분 문제가 중복될 때의 해결방법
 
 ## Memoization
+* top-down
+* recursive
 * 작은 문제를 계산한 결과를 메모리 공간에 메모
 * 작은 문제가 호출되면 결과를 바로 사용
 * caching 캐싱
 * dp 테이블 : d, dp, memo, cache
 
-## top-down vs bottom-up
-* bottom-up이 dp문제의 일반적인 풀이 방법
+## Tabulation
+* bottom-up
+* iterative
+* **dp문제를 풀 때 일반적인 풀이 방법**
+* 작은 문제를 계산한 결과를 메모리 공간에 메모
+* 작은 문제가 호출되면 결과를 바로 사용
+* caching 캐싱
+* dp 테이블 : d, dp, memo, cache
+
+## top-down memoization vs bottom-up tabulation
+* memoization
+  * 필요없는 작은 문제들의 계산을 피할 때가 있음 ex) LCS
+  * 코드 작성이 좀 더 직관적일 때가 있음 ex) matrix chain multiplication
+* tabulation
+  * 함수 호출을 덜 하게 됨
+    * save function call overhead time
+  * 성능 면에서 보다 효율적
+
 
 ## DP를 푸는 과정
 1. 테이블
@@ -29,8 +49,8 @@
 
 ## fibonacci
 ![피보나치](./img/2022-08-13-04-18-09.png)
-* 최적 부분 구조 : a5 = a4 + a3
-* 부분 문제 중복 : a3 중복
+* optimal substructure 최적 부분 구조 : a5 = a4 + a3
+* overlapping subproblems 부분 문제 중복 : a3 중복
 
 ```python
 # recursion
@@ -43,7 +63,7 @@ def fibo(a):
 # print(fibo(100))
 ```
 ```python
-# top-down
+# top-down memoization
 d = [0]*101
 
 def fibo(a):
@@ -59,7 +79,7 @@ def fibo(a):
 print(fibo(100))
 ```
 ```python
-# bottom-up
+# bottom-up tabulation
 d = [0]*101
 
 d[1] = 1

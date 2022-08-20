@@ -57,7 +57,33 @@
 * isempty
 * isfull
 * size
+* [stack 구현 10828](https://www.acmicpc.net/problem/10828)
 ```python
+class Stack:
+    def __init__(self):
+        self.length = 0
+        self.stack = []
+    
+    def push(self, data):
+        self.stack.append(data)
+        self.length += 1
+
+    def pop_stack(self):
+        if self.size() == 0:
+            return -1
+        pop_data = self.stack[len(self.stack)- 1]
+        self.length -= 1
+        del self.stack[self.length]
+        return pop_data
+
+    def size(self):
+        return self.length
+    
+    def empty(self):
+        return 1 if self.length == 0 else 0
+
+    def top(self):
+        return self.stack[-1] if self.size() != 0 else -1
 ```
 ### 사용 예시
 * 함수의 콜스택 (재귀)
@@ -86,6 +112,34 @@
 * size
 * (+) 링 버퍼 (원형 큐) : 배열의 처음과 끝이 연결된 것으로 간주 
 ```python
+class Queue:
+    def __init__(self):
+        self.length = 0
+        self.queue = []
+    
+    def push(self, data):
+        self.queue.append(data)
+        self.length += 1
+
+    def pop_queue(self):
+        if self.size() == 0:
+            return -1
+        pop_data = self.queue[0]
+        self.length -= 1
+        del self.queue[0]
+        return pop_data
+
+    def size(self):
+        return self.length
+    
+    def empty(self):
+        return 1 if self.length == 0 else 0
+
+    def front(self):
+        return self.queue[0] if self.size() != 0 else -1
+
+    def back(self):
+        return self.queue[-1] if self.size() != 0 else -1
 ```
 
 ### 사용 예시
@@ -129,6 +183,18 @@
 |.rotate(n)|n 스텝만큼 오른쪽으로 회전, n이 음수이면 왼쪽으로 회전|
 
 ```python
+# deque example
+from collections import deque
+
+d = deque()
+d.append('a')
+d.appendleft('b')
+d.extendleft('cde')
+print(d)
+d.rotate()
+print(d)
+print(d.popleft())
+print(d.pop())
 ```
 
 * [연습문제 11866](https://www.acmicpc.net/problem/11866)
