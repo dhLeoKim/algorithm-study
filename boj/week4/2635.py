@@ -23,7 +23,7 @@ n = int(input())
 
 max_cnt = 0
 for i in range(1, n+1):
-    lst = [n, i]                        # d[0], d[1] 초기갑 설정
+    lst = [n, i]                        # d[0], d[1] 초기값 설정
     cnt = 2
     while True:
         nxt = lst[-2] - lst[-1]         # d[i] = d[i-1] - d[i-2]
