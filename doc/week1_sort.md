@@ -109,6 +109,10 @@ def binary_search(str, end, key, lst):
 ### O(sqrt(N))
 * 루프N에 대해 sqrt(N)까지 진행
 
+
+## 내장 함수 시간 복잡도
+* https://wiki.python.org/moin/TimeComplexity
+* https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt
 ---
 
 ## sort 정렬
@@ -209,13 +213,13 @@ random.shuffle(lst)
 print(lst)
 
 # merg sort
-def merge_sort(lst):
+def mergeSort(lst):
     if len(lst) < 2:
         return lst
 
     mid = len(lst) // 2
-    left_lst = merge_sort(lst[:mid])
-    right_lst = merge_sort(lst[mid:])
+    left_lst = mergeSort(lst[:mid])
+    right_lst = mergeSort(lst[mid:])
 
     merged_lst = []
     l = h = 0
@@ -231,7 +235,7 @@ def merge_sort(lst):
     merged_lst += right_lst[h:]
     return merged_lst
 
-print(merge_sort(lst))
+print(mergeSort(lst))
 ```
 
 * 평균 : O(NlogN)
@@ -257,7 +261,7 @@ random.shuffle(lst)
 print(lst)
 
 # quick sort
-def quick_sort(lst):
+def quickSort(lst):
     def sorted_lst(left, right):
         if left >= right: return      # base case
 
@@ -284,7 +288,7 @@ def quick_sort(lst):
         return left
     return sorted_lst(0, len(lst) - 1)
 
-quick_sort(lst)
+quickSort(lst)
 print(lst)
 ```
 
@@ -328,21 +332,24 @@ lst = list(range(10))
 random.shuffle(lst)
 print(lst)
 
-def countSort(lst):
-    c = [0 for _ in range(len(lst))]
-    ret = [0 for _ in range(len(lst))]
-    
-    for i in range(len(lst)): c[i] += 1
+def countingSort(lst):
+    n = len(lst)
+    c = [0]*(n+1)
+    ret = [0]*n
 
-    for i in range(1, len(c)): c[i] += c[i-1]
+    for i in range(len(lst)):
+        c[lst[i]] += 1
 
-    for i in range(len(ret)-1, -1, -1):
+    for i in range(1, len(c)):
+        c[i] += c[i-1]
+
+    for i in range(n-1, -1, -1):
         c[lst[i]] -= 1
         ret[c[lst[i]]] = lst[i]
 
     return ret
 
-print(countSort(lst))
+print(countingSort(lst))
 ```
 * O(N + K)
   * N : 리스트 길이
@@ -470,20 +477,20 @@ def gcd(a, b):
 * 예제 [소수 찾기 1978](https://www.acmicpc.net/problem/1978)
 * 소수 판별
 ```python
+# O(N)
 def isPrime(N):
     if N == 1: return False
     for i in range(2, N):
         if N % i == 0: return False
     return True
-# O(N)
 
+# O(sqrt(N))
 def isPrime(N):
     i = 2
     while i * i <= N:
         if N % i == 0: return False
         i += 1
     return True
-# O(sqrt(N))
 ```
 * sqrt(N)까지 검사
 
@@ -491,6 +498,7 @@ def isPrime(N):
 * 에라토스테네스의 체
   * N까지의 소수를 구하려면 sqrt(N)까지의 소수의 배수를 제거
 ```python
+# Nlog(log(N))
 def eratos(N):
     check, prime = [False for _ in range(N + 1)], []
     for i in range(2, N + 1):
@@ -501,7 +509,20 @@ def eratos(N):
     return check, prime
 
 print(eratos(50))
+```
+```python
 # Nlog(log(N))
+def eratos(N):
+    prime = [True for _ in range(N + 1)]
+    prime[0] = False
+    prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if prime[i] == False: continue
+        for j in range(i * i, N + 1, i):
+            prime[j] = False
+    return prime
+
+print(eratos(50))
 ```
 ### 재귀함수
 * 예제 [하노이 탑 11729](https://www.acmicpc.net/problem/11729)

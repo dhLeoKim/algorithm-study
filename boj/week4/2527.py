@@ -8,6 +8,7 @@ for _ in range(4):
     dx = max(x1, x2) - min(p1, p2)
     dy = max(y1, y2) - min(q1, q2)
     
+    # 경우의 수 정리
     # d : max(x1, x2) > min(p1, p2) or max(y1, y2) > min(q1, q2)
     # a : max(x1, x2) < min(p1, p2) and max(y1, y2) < min(q1, q2)
     # c : max(x1, x2) == min(p1, p2) and max(y1, y2) == min(q1, q2)
