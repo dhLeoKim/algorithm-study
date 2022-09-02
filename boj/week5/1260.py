@@ -21,7 +21,6 @@ def DFS(now):
 #     for nxt in range(N+1):
 #         if not visited[nxt] and graph[now][nxt] == 1:
 #             DFS(nxt)
-    
 
 def BFS(now):
     queue = deque([now])
