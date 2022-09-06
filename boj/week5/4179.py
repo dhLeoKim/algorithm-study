@@ -4,28 +4,17 @@ input = sys.stdin.readline
 
 from collections import deque
 
-def BFS(Ji, Jj, Fi, Fj):
+def BFS(J, F):
     QJ = deque()
-    J = deque()
-    J.append((Ji, Jj))
     QJ.append(J)
 
     QF = deque()
-    F = deque()
-    F.append((Fi, Fj))
     QF.append(F)
 
-    # while QJ and QF:
-    while True:
-        if QJ or QF:
-            if QJ: J = QJ.popleft()
-            if QF: F = QF.popleft()
-        elif not QJ and not QF:
-            break
-
-        di = [1, 0, -1, 0]
-        dj = [0, 1, 0, -1]
-
+    di = [1, 0, -1, 0]
+    dj = [0, 1, 0, -1]
+    while QJ:
+        if QJ: J = QJ.popleft()
         temp = deque()
         while J:
             Ji, Jj = J.popleft()
@@ -33,13 +22,15 @@ def BFS(Ji, Jj, Fi, Fj):
                 Jni = Ji + di[k]
                 Jnj = Jj + dj[k]
                 if Jni < 0 or Jni > R-1 or Jnj < 0 or Jnj > C-1:
-                    return lst[Ji][Jj] + 1
+                    if lst[Ji][Jj] != 'F':
+                        return lst[Ji][Jj] + 1
                 if lst[Ji][Jj] != 'F' and lst[Jni][Jnj] == '.':
                     lst[Jni][Jnj] = lst[Ji][Jj] + 1
                     temp.append((Jni, Jnj))
         if temp:
             QJ.append(temp)
 
+        if QF: F = QF.popleft()
         temp = deque()
         while F:
             Fi, Fj = F.popleft()
@@ -57,15 +48,17 @@ def BFS(Ji, Jj, Fi, Fj):
 R, C = map(int, input().split())
 lst = [list(input().strip()) for _ in range(R)]
 
+J = deque()
+F = deque()
 for i in range(R):
     for j in range(C):
         if lst[i][j] == 'J':
-            Ji, Jj = i, j
+            J.append((i, j))
             lst[i][j] = 0
         elif lst[i][j] == 'F':
-            Fi, Fj = i, j
+            F.append((i, j))
 
-print(BFS(Ji, Jj, Fi, Fj))
+print(BFS(J, F))
 
 # print(ret)
 

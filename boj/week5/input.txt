@@ -1,5 +1,6 @@
-4 4
-####
-#F##
-##J#
-#..#
+5
+RRRBB
+GGBBB
+BBBRR
+BBRRR
+RRRRR
