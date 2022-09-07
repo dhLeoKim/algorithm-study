@@ -1,4 +1,4 @@
-# week4 : DFS, BFS
+# week5 : DFS, BFS
 
 ## graph
 ![graph example](./img/2022-08-30-22-35-30.png)
@@ -27,7 +27,7 @@
 5. stack이 빌 때 까지 반복
 ```python
 def DFS(v, visited, graph):
-    visited[v] = Trye
+    visited[v] = True
     for i in graph[v]:
         DFS(i, visited, graph)
 ```
