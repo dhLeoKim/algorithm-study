@@ -14,10 +14,17 @@
 * 최악의 상황을 고려
 
 * 시스템에 대한 감을 익히기
-  * python에서 대충
+  * python에서 대충 1초에 5000만번의 연산 처리 가능
   * 1M / 1sec : 안정적
   * 10M ~ 50M / 1sec : 대다수 가능
   * 100M / 1sec : 거의 불가능
+
+* 시간제한에 따른 알고리즘 설계
+* 시간 제한이 1초일 때,
+  * N의 범위가 500이라면, 시간복잡도가 O(N^3) 인 알고리즘 설계
+  * N의 범위가 2,000이라면, 시간복잡도가 O(N^2) 인 알고리즘 설계
+  * N의 범위가 100,00이라면, 시간복잡도가 O(NlogN) 인 알고리즘 설계
+  * N의 범위가 10,000,000이라면, 시간복잡도가 O(N) 인 알고리즘 설계
 
 
 ## 시간복잡도
@@ -113,6 +120,14 @@ def binary_search(str, end, key, lst):
 ## 내장 함수 시간 복잡도
 * https://wiki.python.org/moin/TimeComplexity
 * https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt
+
+## 자주 사용하는 표준 라이브러리
+* 내장 함수
+* itertools : permutations (순열), combinations (조합)
+* heapq : heap 자료구조
+* bisect : binary search (이진탐색)
+* collections: deque, Counter
+* math : 수학 계산, 팩토리얼, sqrt (제곱근), gcd (최대공약수), 삼각함수, 파이
 ---
 
 ## sort 정렬
