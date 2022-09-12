@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open('input.txt')
+sys.stdin = open('1926_input.txt')
 input = sys.stdin.readline
 
 ############
@@ -43,6 +43,7 @@ input = sys.stdin.readline
 
 ############
 # # 2. DFS풀이
+# max recursion depth error!
 
 def DFS(i, j):
     global cnt
