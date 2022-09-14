@@ -16,4 +16,8 @@ week 3. [동적 계획법](doc/week3_dynamic_programming.md)
 
 week 4. 문제풀이
 
-week 5. 
+week 5. [DFS, BFS](doc/week5_DFS_BFS.md)
+
+week 6. [backtracking, divide & conquer](doc/week6_backtracking.md)
+
+week 7. [그리디 알고리즘]()

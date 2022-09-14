@@ -26,7 +26,8 @@ def backtracking(arr, idx, input):
     candidate = [0] * MAXCANDIDATES
 
     if idx == input:
-        process
+        # process
+        print(arr)
     else:
         idx += 1
         candidates = constructCandidates(arr, idx, input, candidate)
@@ -55,10 +56,34 @@ def constructCandidates(arr, idx, input, candidate):
 
     return candidates
 
+# MAXCANDIDATES = 2
 MAXCANDIDATES = 3
 NMAX = 4
 arr = [0]*NMAX
 backtracking(arr, 0, 3)
+```
+```python
+# 부분집합
+# {1, 2, 3}의 부분집합
+
+# [0, 1, 1, 1]
+# [0, 1, 1, 0]
+# [0, 1, 0, 1]
+# [0, 1, 0, 0]
+# [0, 0, 1, 1]
+# [0, 0, 1, 0]
+# [0, 0, 0, 1]
+# [0, 0, 0, 0]
+
+# 순열
+# {1, 2, 3}을 포함하는 순열 생성
+
+# [0, 1, 2, 3]
+# [0, 1, 3, 2]
+# [0, 2, 1, 3]
+# [0, 2, 3, 1]
+# [0, 3, 1, 2]
+# [0, 3, 2, 1]
 ```
 
 ## 예제
@@ -123,6 +148,20 @@ def checknode(v):
             for u in child of v:
                 checknode(u)
 ```
+```python
+# pseudo code
+
+def checknode(v):
+    if v == N:
+        cnt += 1
+        return
+    
+    for i in range(N):
+        if promising(v):
+            visited[v] = True
+            checknode(v+1)
+            visited[v] = False
+```
 * 연습문제 boj 9663
 * https://www.acmicpc.net/problem/9663
 
@@ -155,6 +194,30 @@ result = 0
 
 subsetSum(0, 10)
 print(result)
+```
+```python
+def subsetSum(i, N, s, t):
+    global result, cnt
+    cnt += 1
+    rest_sum = sum(A[i:])
+    if i == N:                              # 모든 원소를 확인
+        if s == t:                          # 부분집합의 합이 t이면
+            result += 1
+        return
+    elif s > t:
+        return
+    elif s + rest_sum < t:
+        return
+    else:
+        subsetSum(i+1, N, s+A[i], t)        # A[i]가 포함된 경우 
+        subsetSum(i+1, N, s, t)             # A[i]가 포함되지 않은 경우
+
+A = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+bit = [0]*len(A)
+result = 0
+cnt = 0
+subsetSum(0, 10, 0, 30)
+print(result, cnt)
 ```
 * 연습문제 boj 1182
 * https://www.acmicpc.net/problem/1182
