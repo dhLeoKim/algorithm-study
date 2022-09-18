@@ -18,6 +18,6 @@ week 4. 문제풀이
 
 week 5. [DFS, BFS](doc/week5_DFS_BFS.md)
 
-week 6. [backtracking, divide & conquer](doc/week6_backtracking.md)
+week 6. [백트래킹, 분할과 정복](doc/week6_backtracking.md)
 
 week 7. [그리디 알고리즘]()
