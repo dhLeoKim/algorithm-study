@@ -2,36 +2,29 @@ import sys
 sys.stdin = open('input.txt')
 input = sys.stdin.readline
 
-###################
-# 시간 초과
-
-# N = int(input())
-# lst = [list(map(int, input().split())) for _ in range(N)]
-
-# lst.sort()
-# lst.sort(key= lambda x: x[1])
-
-# room = []
-# for i in lst:
-#     for j in range(len(room)):
-#         if i[0] >= room[j][0]:
-#             room[j] = [i[1]]
-#             break
-#     else:
-#         room.append([i[1]])
-
-# print(len(room))
-
 from heapq import*
 
 N = int(input())
-h = [0]
-for _ in range(N):
-    s, e = map(int, input().split())
-    if s >= h[0]:
-        heappop(h)
-        heappush(h, e)
-    else:
-        heappush(h, e)
+lst = [list(map(int, input().split())) for _ in range(N)]
+lst.sort()  # 주의!!! 왜 시작시간 순서로 정렬해야하는지 생각해보기
 
-print(len(h))
+room = []
+heappush(room, lst[0][1])
+for i in range(1, N):
+    if lst[i][0] >= room[0]:
+        heappop(room)
+        heappush(room, lst[i][1])
+    else:
+        heappush(room, lst[i][1])
+
+print(len(room))
+
+# 주의! 반례
+# 4
+# 1 2
+# 1 4
+# 2 6
+# 4 5
+
+# 해당 문제는 강의실이 비는 시간을 최소화 해야함!
+# 즉 강의가 끝나는 시간과 다음 시작 시간의 차가 작게 최적화
