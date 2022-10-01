@@ -14,10 +14,14 @@ week 2. [자료구조](doc/week2_datastructure.md)
 
 week 3. [동적 계획법](doc/week3_dynamic_programming.md)
 
-week 4. 문제풀이
+week 4. 문제 풀이
 
 week 5. [DFS, BFS](doc/week5_DFS_BFS.md)
 
 week 6. [백트래킹, 분할과 정복](doc/week6_backtracking.md)
 
-week 7. [그리디 알고리즘]()
+week 7. [그리디 알고리즘](doc/week7_greedy.md)
+
+week 8. [그래프 이론](doc/week8_graph.md)
+
+week 9. [완전탐색]()

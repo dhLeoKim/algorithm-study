@@ -5,7 +5,7 @@
 4. MST
    1. 프림
    2. 크루스칼
-   3. 서로소 union find
+   3. Disjoint-Sets (상호배타 집합) 자료구조, union find
 5. 최소경로
    1. 다익스트라
    2. 플로이드 워셜
@@ -13,23 +13,33 @@
 
 
 ## graph
-* Node/Vertex와 Edge로 이루어진 자료구조
+* Node와 Edge로 이루어진 자료구조
+* N:N 관계를 가지는 원소를 표현하는 비선형 자료구조
+
+## graph 종류
 * Undirected Graph 무방향 그래프
+  * 방향o
 * Directed Graph 방향 그래프
+  * 방향x
 * Cyclic Graph 순환 그래프
-  * 사이클이 존재
+  * 사이클o
 * Acyclic Graph 비순환 그래프
-  * 사이클이 존재x
-* DAG Directed Acyclic Graph 방향 비순환 그래프
+  * 사이클x
 * Complete Graph 완전 그래프
+  * 모든 노드가 연결
 * Connected Graph 연결 그래프
+  * 독립적인 그래프 존재x
 * Weighted Graph 가중치 그래프
-  * 배열에 가중치 저장
+  * 배열에 가중치 정보 저장
 * Simple Graph 단순 그래프
   * 두 정점 사이의 간선이 1개 이하, 루프 존재x
 * 루프가 있는 경우도 그래프!
   * loop : 자기자신으로 연결된 간선
 * 연결이 되어 있지 않은 경우도 그래프!
+
+### 예시
+* DAG Directed Acyclic Graph 방향 비순환 그래프
+
 
 ## graph 표현
 * indegree 진입차수 : 들어오는 간선 수
@@ -50,12 +60,29 @@
 ## tree
 * Unidrected Acyclic Connected Graph
 * 무방향 비순환 연결 그래프
+* 그래프의 한 종류
+* Node와 Edge로 구성되어 상하위 관계를 나타내는 자료구조
+* 1:N 관계를 가지는 원소를 표현하는 비선형 자료구조
+
+## tree 종류
 * binary tree 이진 트리
+  * 모든 노드들이 2개의 서브트리를 가지는 형태
 * full binary tree 포화 이진 트리
+  * ![](./img/2022-09-30-23-34-10.png)
+  * 부모 노드가 자식 노드를 2개 가지거나 하나도 가지지 않는 이진 트리
 * perfect binary tree
-* complete binary tree
-* skewed binary tree
-* degenerate tree
+  * ![](./img/2022-09-30-23-35-16.png)
+  * 모든 부모 노드가 자식 노드를 가지고, 모든 리프 노드의 level이 동일한 이진 트리
+* complete binary tree 완전 이진 트리
+  * ![](./img/2022-09-30-23-35-41.png)
+  * 빈자리 없이 순서대로 채워지는 이진 트리
+* skewed binary tree 편향 이진 트리
+  * ![](./img/2022-09-30-23-35-51.png)
+  * 한쪽 방향으로만, 자식 노드를 하나만 가지는 이진트리
+* degenerate tree 
+  * ![](./img/2022-09-30-23-36-00.png)
+  * 왼쪽이나 오른쪽 방향으로, 자식 노드를 하나만 가지는 이진 트리
+
 
 ## tree 표현
 * 인접 행렬
@@ -71,7 +98,7 @@
 
 ## Topological Sort 위상 정렬
 * ![DAG](./img/2022-09-28-09-49-44.png)
-* 방향 그래프에서 간선으로 주어진 정점 간 선후관계를 위배하지 않는 정렬
+* 비순환 방향 그래프에서 간선으로 주어진 정점 간 선후관계를 위배하지 않는 정렬
 * 선후관계가 주어진 상태에서 순서를 정해야하는 문제
 * DAG (Directed Acyclic Graph)에서만 정의 됨
 * 사이클이 존재하면 위상 정렬에 모든 정점이 포함되지 않게 됨
@@ -82,15 +109,45 @@
   * 3, 5, 7, 8, 11, 2, 9, 10
   * 7, 5, 11, 3, 10, 8, 9, 2
 
-## 구현
+### 구현
 1. 정점들의 indegree정보를 담은 배열 저장
 2. indegree가 0인 정점들을 큐에 저장
 3. 이 정점들 중 하나를 선택하여 큐에서 pop하여 위상 정렬
 4. 정렬된 정점과 연결된 모든 정점의 indegree 배열 값 --
-5. 만약 indegree 값이 0이 된다면 큐에 append
+5. 이 때, 만약 indegree 값이 0이 된다면 큐에 append
 6. 큐가 빌 때까지 반복
+```python
+from collections import deque
 
-## 예제
+def topologySort():
+    ret = []
+    queue = deque()
+    for i in range(1, N+1):                 # indegree가 0인 정점 큐에 추가
+        if indegree[i] == 0:
+            queue.append(i)
+
+    while queue:                            # 큐가 빌 때 까지
+        now = queue.popleft()               # 큐에서 꺼내 위상 정렬
+        ret.append(now)
+        for nxt in graph[now]:              # 해당 정점과 연결된 간선 제거
+            indegree[nxt] -= 1
+            if indegree[nxt] == 0:          # 새롭게 진입차수가 0이된 정점 큐에 추가
+                queue.append(nxt)
+
+    return ret
+
+N, E = map(int, input().split())
+graph = [[] for _ in range(N+1)]
+indegree = [0]*(N+1)
+for _ in range(E):
+    u, v = map(int, input().split())
+    graph[u].append(v)                      # 인접 리스트
+    indegree[v] += 1                        # 진입차수 배열 생성
+
+print(topologySort())
+```
+
+#### 예제
 * boj 2252
 * https://www.acmicpc.net/problem/2252
 
@@ -106,13 +163,13 @@
 * 무방향 가중치 그래프의 신장 트리 중에서 간선의 합이 최소인 트리
 * 그래프에서 최소 비용을 찾는 문제
 
-## 표현
+### 표현
 * 인접 행렬 + 가중치
 * 인접 리스트 + 가중치
 * 간선 배열 + 가중치
 * 부모 정보 저장(트리) + 가중치
 
-## 연습
+### 연습
 ![](./img/2022-09-28-12-59-05.png)
 
 ## 프림 알고리즘
@@ -124,7 +181,7 @@
 3. 비용이 가장 작은 간선을 선택하여 연결되는 정점을 최소 신장 트리에 추가
 4. 최소 신장 트리에 V-1개의 간선이 추가될 때 까지 반복
 
-## 구현
+### 구현
 1. 임의의 정점 선택해서 최소 신장 트리에 추가
 2. 해당 정점과 연결된 모든 간선을 우선순위 큐에 추가
 3. 우선순위 큐에서 비용이 가장 작은 간선을 pop 해서
@@ -136,6 +193,27 @@
 ```python
 from heapq import*
 
+def prim(start):
+    visited[start] = True
+    ret = 0
+    h = []
+    for w, v in graph[start]:
+        heappush(h, (w, v))             # u와 연결된 간선 우선순위 큐 추가
+
+    cnt = 0
+    while cnt < N-1:                    # N-1개의 간선이 추가될 때 까지 반복
+        w, v = heappop(h)
+        if visited[v]:                  # 최소신장트리에 포함된 정점을 연결하는 간선이면 continue
+            continue
+        ret += w                        # 포함되지 않은 정점을 연결하는 간선이면, 최소신장트리에 추가
+        visited[v] = True
+        cnt += 1
+        for nw, nv in graph[v]:
+            if not visited[nv]:         # 최소 신장 트리에 포함되지 않은 정점을 연결하는 모든 간선을
+                heappush(h, (nw, nv))   # 우선순위 큐에 추가
+
+    return ret
+
 N, E = map(int, input().split())
 graph = [[] for _ in range(N)]
 for _ in range(E):
@@ -144,31 +222,10 @@ for _ in range(E):
     graph[v].append((w, u))
 
 visited = [False]*(N)
-
-u = 0                               # 시작점 0 선택
-visited[u] = True
-
-res = 0
-h = []
-for nxt in graph[u]:
-    heappush(h, nxt)                # u와 연결된 간선 우선순위 큐 추가
-
-cnt = 0
-while cnt < N-1:                    # N-1개의 간선이 추가될 때 까지 반복
-    w, v = heappop(h)
-    if visited[v]:                  # 최소신장트리에 포함된 정점을 연결하는 간선이면 continue
-        continue
-    res += w                          # 포함되지 않은 정점을 연결하는 간선이면, 최소신장트리에 추가
-    visited[v] = True
-    cnt += 1
-    for nxt in graph[v]:
-        if not visited[nxt[1]]:     # 최소 신장 트리에 포함되지 않은 정점을 연결하는 모든 간선을
-            heappush(h, nxt)        # 우선순위 큐에 추가
-
-print(res)
+print(prim(0))                          # 시작점 0 선택
 ```
 
-## 우선 순위 큐 사용x 구현 예시
+### 구현 예시 (우선 순위 큐 사용x)
 ```python
 def prim1(r, V):
     MST = [0]*(V+1)                             # MST 포함 여부
@@ -232,32 +289,43 @@ print(prim2(0, V))
 ## 크루스칼 알고리즘
 * 가장 낮은 비용의 간선부터 오름차순으로 탐색하면서, 간선의 정점들을 합쳐나가는 알고리즘
 * 사이클을 만들지 않으면서, 비용이 작은 간선부터 차례대로 최소 신장 트리에 추가하는 그리디 알고리즘
-* Union Find 알고리즘으로 구현
-1. 간선 비용을 오름차순으로 정렬후, 가장 낮은 비용부터 순서대로 탐색
+* Disjoint Sets 서로소 집합(혹은 Union Find) 자료구조로 구현
+1. 간선 비용을 오름차순으로 정렬 후, 가장 낮은 비용부터 순서대로 탐색
+2. 해당 간선이 사이클을 발생한다면 넘어가기
+3. 해당 간선이 사이클을 발생하지 않는다면 최소 신장 트리에 추가
+4. 모든 간선에 대해 반복
+
+### 구현
+1. 간선 비용을 오름차순으로 정렬 후, 가장 낮은 비용부터 순서대로 탐색
 2. 간선으로 연결하는 정점 u, v가 같은 그룹이라면 그냥 넘어가기
 3. 다른 그룹이라면, u와 v를 같은 그룹으로 만들고 해당 간선을 최소 신장 트리에 추가
 4. 최소 신장 트리에 V-1개의 간선을 추가할 때 까지 반복
-
-## 구현
 ```python
-def find(x):                                    # 대표 찾기
+def find(x):                                    # 부모 찾기
     if p[x] < 0:
         return x
-    else:
-        return find(p[x])
+    p[x] = find(p[x])
+    return p[x]
 
-def is_diff_group(u, v):                        # 같은 그룹 확인
-    u = find(u)
-    v = find(v)
-    if u == v:                                  # 같은 그룹인 경우
-        return 0
-    if p[u] == p[v]:                            # 랭크
-        p[u] -= 1
-    if p[u] < p[v]:                             # 다르다면 같은 그룹으로 업데이트
-        p[v] = u
+def union(u, v):                                # 합치기
+    pu = find(u)
+    pv = find(v)
+    if p[pu] == p[pv]:                          # 랭크가 같다면 한쪽을 -1
+        p[pu] -= 1
+    if p[pu] < p[pv]:                           # 랭크가 낮은 쪽으로 합치기
+        p[pv] = pu
     else:
-        p[u] = v
-    return 1
+        p[pu] = pv
+
+def kruskal():
+    ret = 0
+    for w, u, v in edge:
+        if find(u) == find(v):                  # 같은 그룹이면 continue
+            continue
+        ret += w                                # 다른 그룹이면 최소 신장 트리 추가
+        union(u, v)                             # 같은 그룹으로 변경
+
+    return ret
 
 N, E = map(int, input().split())
 edge = []
@@ -265,32 +333,21 @@ for _ in range(E):
     u, v, w = map(int, input().split())
     edge.append((w, u, v))                      # 간선 배열
 
-edge.sort()                                     # 비용으로 오름차순
-p = [-1]*N                                      # 그룹 표현
+edge.sort()                                     # 비용 기준으로 오름차순
+p = [-1]*(N+1)                                  # 부모 배열, rank -1로 초기화
 
-res = 0
-cnt = 0
-for i in range(E):
-    w, u, v = edge[i]
-    if(not is_diff_group(u, v)):                # 같은 그룹이면 continue
-        continue    
-    res += w                                    # 다른 그룹이면 최소 신장 트리 추가, 같은 그룹으로 업데이트
-    cnt += 1
-
-print(res)
+print(kruskal())
 ```
 
-## 구현 예시
+### 구현 예시
 ```python
 def find_set(x):                                # 대표 원소 찾기
     while x != rep[x]:
         x = rep[x]
     return x
 
-
 def union(x, y):                                # 대표 원소 바꾸기
     rep[find_set(y)] = find_set(x)
-
 
 def kruskal():
     N = V+1                                     # 노드 수
@@ -316,6 +373,6 @@ rep = [i for i in range(V+1)]                   # 대표원소 초기화
 print(kruskal())
 ```
 
-## 예제
+### 예제
 * boj 1197
 * https://www.acmicpc.net/problem/1197
