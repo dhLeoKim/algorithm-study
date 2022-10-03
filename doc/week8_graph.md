@@ -306,8 +306,7 @@ print(prim2(0, V))
 def find(x):                                    # 부모 찾기
     if p[x] < 0:
         return x
-    p[x] = find(p[x])
-    return p[x]
+    return find(p[x])
 
 def union(u, v):                                # 합치기
     pu = find(u)
@@ -344,7 +343,7 @@ print(kruskal())
 ### 구현 예시
 ```python
 def find_set(x):                                # 대표 원소 찾기
-    while x != rep[x]:
+    while rep[x] != x:
         x = rep[x]
     return x
 
@@ -391,6 +390,9 @@ print(kruskal())
 * 벨만 포드
   * 특정한 한 정점에서 다른 모든 정점으로 가는 최단 경로 계산
   * 음의 간선 있을 때
+
+## 연습
+
 
 ## dijkstra algorithm 다익스트라 알고리즘
 * 특정한 정점에서 다른 모든 정점으로 가는 최단 경로 계산

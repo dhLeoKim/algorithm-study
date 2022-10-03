@@ -85,8 +85,7 @@ print(kruskal())
 def find(x):                                    # 부모 찾기
     if p[x] < 0:
         return x
-    p[x] = find(p[x])
-    return p[x]
+    return find(p[x])
 
 def union(u, v):                                # 합치기
     pu = find(u)
