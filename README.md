@@ -28,6 +28,6 @@ week 9. 완전탐색 문제 풀이
 
 week 10. 구현, 시뮬레이션 문제풀이
 
-week 11. [투 포인터](doc/week9_two_pointers.md)
+week 11. [투 포인터](doc/week11_two_pointers.md)
 
 week 12. 문자열
