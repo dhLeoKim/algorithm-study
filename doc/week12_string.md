@@ -121,7 +121,7 @@ ROOT = 1
 unused = 2
 MX = 100                            # 최대 등장 가능한 글자 수
 chk = [False]*MX                    # 해당 정점이 무자열의 끝인지 여부 저장
-nxt = [[-1]*MX for _ in range(26)]  # 해당 정점의 자식 정점 번호 저장 (알파벳 예시)
+nxt = [[-1]*26 for _ in range(MX)]  # 해당 정점의 자식 정점 번호 저장 (알파벳 예시)
 
 def c2i(c):                         # 글자를 숫자로 바꿔 배열의 idx로 사용
     return ord(c) - ord('A')        # 'A'의 idx는 0, 'Z'의 idx는 25
